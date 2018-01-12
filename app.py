@@ -87,7 +87,7 @@ def python_apps_page():
 
 @app.route('/contact', methods=['GET','POST'])
 def contact():
-	if request.method == 'POST':
+	if request.method == 'GET':
 		return render_template('contact.html')
 
 @app.route('/blog', methods=['GET'])
