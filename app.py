@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect
+from flask_wtf import Form
+from wtforms import StringField, PasswordField
 import datetime
 import pytz # timezone 
 import requests
