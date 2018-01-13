@@ -1,7 +1,7 @@
 $(function() {
 
     $("#contactForm input,#contactForm textarea").jqBootstrapValidation({
-        preventSubmit: false,
+        preventSubmit: true,
         submitError: function($form, event, errors) {
             // additional error messages or events
         },
@@ -11,24 +11,26 @@ $(function() {
             event.preventDefault();
             
             // get values from FORM
-            var name = $("input#name").val();
-            var email = $("input#email").val();
-            var phone = $("input#phone").val();
-            var message = $("textarea#message").val();
-            var firstName = name; // For Success/Failure Message
-            // Check for white space in name for Success/Fail message
-            if (firstName.indexOf(' ') >= 0) {
-                firstName = name.split(' ').slice(0, -1).join(' ');
-            }
+            var name = document.getElementById('inputName'),
+                email = document.getElementById('inputEmail'),
+                number = document.getElementById('inputNumber'),
+                message = document.getElementById('inputMessage');
+            
+            if (!name.value || !email.value || !number.value || !message.value) {
+                alertify.error('Please check your entries')
+            } else {
+              
             $.ajax({
-                url: "././mail/contact_me.php",
-                type: "POST",
-                data: {
-                    name: name,
-                    phone: phone,
-                    email: email,
-                    message: message
-                },
+                url: "https://formspree.io/cabretchris@gmail.com", 
+                method: "POST",
+                data: $(this).serialize(),
+                dataType: "json"
+            });
+            e.preventDefault()
+            $(this).get(0).reset()
+            alertify.success('Message sent')
+          }
+        }),
                 cache: false,
                 success: function() {
                     // Enable button & show success message
